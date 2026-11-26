@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     }
 
     if (strcmp(argv[1], "YEAR_DATA") == 0) {
-        printf("Mode YEAR_DATA\n");
+        traitementAnnees(fichier);
     } else if (strcmp(argv[1], "AGE_DATA") == 0) {
         printf("Mode AGE_DATA\n");
     } else if (strcmp(argv[1], "CRASH_DATA") == 0) {

@@ -5,3 +5,5 @@ typedef struct {
     int nbBlessesGraves;
     int nbBlessesLegers;
 } StatAnnee;
+
+void traitementAnnees(FILE *fichier);
