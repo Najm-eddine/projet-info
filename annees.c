@@ -3,13 +3,21 @@
 
 void traitementAnnees(FILE *fichier)
 {
+    StatAnnee annees[20];
     char ligne[1000];
-    int nbLignes = 0;
     int i;
     int colonne;
     int annee;
     int idAccident;
     int gravite;
+
+    for (i = 0; i < 20; i++) {
+        annees[i].nbAccidents = 0;
+        annees[i].nbIndemnes = 0;
+        annees[i].nbTues = 0;
+        annees[i].nbBlessesGraves = 0;
+        annees[i].nbBlessesLegers = 0;
+    }
 
     fgets(ligne, 1000, fichier);
 
@@ -33,8 +41,20 @@ void traitementAnnees(FILE *fichier)
             i++;
         }
 
-        nbLignes++;
+        if (annee >= 2005 && annee <= 2024) {
+            int indice = annee - 2005;
+
+            if (gravite == 1) {
+                annees[indice].nbIndemnes++;
+            } else if (gravite == 2) {
+                annees[indice].nbTues++;
+            } else if (gravite == 3) {
+                annees[indice].nbBlessesGraves++;
+            } else if (gravite == 4) {
+                annees[indice].nbBlessesLegers++;
+            }
+        }
     }
 
-    printf("Nb lignes lues : %d\n", nbLignes);
+    printf("2005 : %d tues, %d blesses graves\n", annees[0].nbTues, annees[0].nbBlessesGraves);
 }
