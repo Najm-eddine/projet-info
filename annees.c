@@ -10,8 +10,9 @@ void traitementAnnees(FILE *fichier)
     int annee;
     int idAccident;
     int gravite;
-    int anneePrecedente = 0;
-    int idPrecedent = -1;
+
+    
+    static char dejaVu[20][100000];
 
     for (i = 0; i < 20; i++) {
         annees[i].nbAccidents = 0;
@@ -46,10 +47,10 @@ void traitementAnnees(FILE *fichier)
         if (annee >= 2005 && annee <= 2024) {
             int indice = annee - 2005;
 
-            if (annee != anneePrecedente || idAccident != idPrecedent) {
+            
+            if (idAccident < 100000 && dejaVu[indice][idAccident] == 0) {
+                dejaVu[indice][idAccident] = 1;
                 annees[indice].nbAccidents++;
-                anneePrecedente = annee;
-                idPrecedent = idAccident;
             }
 
             if (gravite == 1) {
@@ -63,6 +64,23 @@ void traitementAnnees(FILE *fichier)
             }
         }
     }
+    int choix=-1;
 
-    printf("2005 : %d accidents, %d tues, %d blesses graves\n", annees[0].nbAccidents, annees[0].nbTues, annees[0].nbBlessesGraves);
+    while (choix != 0) {
+        printf("Annee (0 pour quitter) : ");
+        scanf("%d", &choix);
+
+        if (choix >= 2005 && choix <= 2024) {
+            int indice = choix - 2005;
+
+            printf("Accidents : %d\n", annees[indice].nbAccidents);
+            printf("Indemnes : %d\n", annees[indice].nbIndemnes);
+            printf("Tues : %d\n", annees[indice].nbTues);
+            printf("Blesses graves : %d\n", annees[indice].nbBlessesGraves);
+            printf("Blesses legers : %d\n", annees[indice].nbBlessesLegers);
+        } else if (choix != 0) {
+            printf("Annee invalide\n");
+        }
+    }
+
 }
