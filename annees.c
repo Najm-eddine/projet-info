@@ -10,6 +10,8 @@ void traitementAnnees(FILE *fichier)
     int annee;
     int idAccident;
     int gravite;
+    int anneePrecedente = 0;
+    int idPrecedent = -1;
 
     for (i = 0; i < 20; i++) {
         annees[i].nbAccidents = 0;
@@ -44,6 +46,12 @@ void traitementAnnees(FILE *fichier)
         if (annee >= 2005 && annee <= 2024) {
             int indice = annee - 2005;
 
+            if (annee != anneePrecedente || idAccident != idPrecedent) {
+                annees[indice].nbAccidents++;
+                anneePrecedente = annee;
+                idPrecedent = idAccident;
+            }
+
             if (gravite == 1) {
                 annees[indice].nbIndemnes++;
             } else if (gravite == 2) {
@@ -56,5 +64,5 @@ void traitementAnnees(FILE *fichier)
         }
     }
 
-    printf("2005 : %d tues, %d blesses graves\n", annees[0].nbTues, annees[0].nbBlessesGraves);
+    printf("2005 : %d accidents, %d tues, %d blesses graves\n", annees[0].nbAccidents, annees[0].nbTues, annees[0].nbBlessesGraves);
 }
